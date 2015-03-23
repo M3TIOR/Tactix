@@ -43,29 +43,54 @@ def getTerminalSize():
 
 #initiate our character size data so we can calculate how large our screen can be.
 #this kindof sucks because doing screen size calculations this way means the user can't
-#resize the game without screwing it up...
+#resize mid gameplay without screwing it up...
 
 class grid:
-	def 
-	__init__(self,x,y,target):
-		def append_data:
+	edge='+'
+	line_x='-'
+	line_y='|'
+	
+	def __init__(self,width,height,border):
+		self.width=width
+		self.height=height	
+		size = width*height
+		if size:
+			self.data = [None]*size
+		else
+			self.data = [None]
+		
+		if border:
 			
-		size = x*y
-		self.data = [size]
-		if target == "stdout"
-			self.target = print
 	
+	def draw(x,y,width,height,data):
+		#data is the inner contents.
+		#x is left offset.
+		#y is top offset.
+		#width...
+		#height, I'm sure you can figure it out.
+		l=0
+		while l < (width*height): #width and height are max values.
+			if data[l] == '\n':
+				l+=((l/width)+1)*width # jump one line.
+			else
+				self.data[((l+x)*y)%width]=data[l]
+				l+=1
 	
-	
-	#pushes data to console.
-	def flush():
-		os.system("clear")
+	def flush(x,y,width,height):
+		ret = [None]*((width*height)+height)
+		l=0
+		while l < (width*height):
+			if not (l%(width+1)):
+				ret[l] = '\n'
+			else
+				ret[l] = self.data[((l+x)*y)%width]
+		
 
 global character_field
 character_field = grid(getTerminalSize())
 
 #text orientation.
-def t_orient(text,x,y):
+def t_orient(text,x,y,maxx,maxy):
 	#quadrants work as such
 	#
 	#    +-----------------+
@@ -79,11 +104,6 @@ def t_orient(text,x,y):
 	#    | 0,2 | 1,2 | 2,2 |
 	#    +-----------------+
 
-
-class main_menu:
-	def draw():
-		
-	def context():
 		
 
 class game:
