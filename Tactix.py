@@ -18,7 +18,7 @@ def getTerminalSize():
 		try:
 			import fcntl, termios, struct, os
 			cr = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ,'1234'))
-        	except:
+		except:
 			return
 		return cr
 	cr = ioctl_GWINSZ(0) or ioctl_GWINSZ(1) or ioctl_GWINSZ(2)
@@ -50,17 +50,15 @@ class grid:
 	line_x='-'
 	line_y='|'
 	
-	def __init__(self,width,height,border):
+	def __init__(self,width,height):
 		self.width=width
 		self.height=height	
 		size = width*height
 		if size:
 			self.data = [None]*size
-		else
+		else:
 			self.data = [None]
 		
-		if border:
-			
 	
 	def draw(x,y,width,height,data):
 		#data is the inner contents.
@@ -72,7 +70,7 @@ class grid:
 		while l < (width*height): #width and height are max values.
 			if data[l] == '\n':
 				l+=((l/width)+1)*width # jump one line.
-			else
+			else:
 				self.data[((l+x)*y)%width]=data[l]
 				l+=1
 	
@@ -82,43 +80,58 @@ class grid:
 		while l < (width*height):
 			if not (l%(width+1)):
 				ret[l] = '\n'
-			else
+			else:
 				ret[l] = self.data[((l+x)*y)%width]
 		
-
+#... stuff...
 global character_field
-character_field = grid(getTerminalSize())
+character_field = getTerminalSize()
 
 #text orientation.
-def t_orient(text,x,y,maxx,maxy):
-	#quadrants work as such
-	#
-	#    +-----------------+
-	#    |     |     |     |
-	#    | 0,0 | 1,0 | 2,0 |
-	#    +-----------------+
-	#    |     |     |     |
-	#    | 0,1 | 1,1 | 2,1 |
-	#    +-----------------+
-	#    |     |     |     |
-	#    | 0,2 | 1,2 | 2,2 |
-	#    +-----------------+
-
-		
+#def t_orient(text,x,y,maxx,maxy):
+#quadrants work as such
+#
+#    +-----------------+
+#    |     |     |     |
+#    | 0,0 | 1,0 | 2,0 |
+#    +-----------------+
+#    |     |     |     |
+#    | 0,1 | 1,1 | 2,1 |
+#    +-----------------+
+#    |     |     |     |
+#    | 0,2 | 1,2 | 2,2 |
+#    +-----------------+
 
 class game:
-	main = menu();
-
-class ai:
+	main_menu = grid(character_field[0],character_field[1]);
+	
+	def __init__(self):
+		main_menu
+	
+	
 	
 
 
 
-#MAIN_CODE
-
-def main():
-	
 
 
-#finally we call to main.
-main()
+
+
+
+#debug section.
+print(game.main_menu.width)
+print(game.main_menu.height)
+
+
+
+
+
+
+
+
+
+
+
+
+
+#eof, cause Imma stup.
