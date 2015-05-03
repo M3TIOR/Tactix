@@ -45,44 +45,34 @@ def getTerminalSize():
 #this kindof sucks because doing screen size calculations this way means the user can't
 #resize mid gameplay without screwing it up...
 
-class grid:
+class window:
 	edge='+'
 	line_x='-'
 	line_y='|'
-	
+
 	def __init__(self,width,height):
 		self.width=width
-		self.height=height	
-		size = width*height
-		if size:
-			self.data = [None]*size
-		else:
-			self.data = [None]
-		
-	
-	def draw(x,y,width,height,data):
-		#data is the inner contents.
-		#x is left offset.
-		#y is top offset.
-		#width...
-		#height, I'm sure you can figure it out.
-		l=0
-		while l < (width*height): #width and height are max values.
-			if data[l] == '\n':
-				l+=((l/width)+1)*width # jump one line.
-			else:
-				self.data[((l+x)*y)%width]=data[l]
-				l+=1
-	
-	def flush(x,y,width,height):
-		ret = [None]*((width*height)+height)
-		l=0
-		while l < (width*height):
-			if not (l%(width+1)):
-				ret[l] = '\n'
-			else:
-				ret[l] = self.data[((l+x)*y)%width]
-		
+		self.height=height
+		self.data=[None]*(width*height)
+
+		#content padding (by default it's one because we don't want to overwrite our border.)
+		self.c=1
+		#fill border.
+		for(l=0;self.data[l];l+=1):
+			if(l==0 || l==width || l==(height*width) || l==((height*width)-(width+1))):
+				self.data[l]=self.edge
+				#keep working here...
+
+
+	def draw(xoff,yoff,width,height,data):
+		exit=width*height
+		for(l=0;data[l]||l>exit;l=+1):
+			self.data[((c+xoff+l)*(c+yoff))] = data[l]
+
+	#outputs everything to screen.
+	def flush():
+
+
 #... stuff...
 global character_field
 character_field = getTerminalSize()
@@ -103,13 +93,13 @@ character_field = getTerminalSize()
 #    +-----------------+
 
 class game:
-	main_menu = grid(character_field[0],character_field[1]);
-	
+	main_menu = window(character_field[0],character_field[1]);
+
 	def __init__(self):
 		main_menu
-	
-	
-	
+
+
+
 
 
 
